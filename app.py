@@ -57,8 +57,7 @@ class covid_cases_data:
         elif type_=='deaths':
             return int(current_state[4].text)
         elif type_=='total_confirmed':
-            return int(current_state[5].text)
-
+            return int(self.state_data[37][5].text)
             
 def speak(text):
     engine = pyttsx3.init()
