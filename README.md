@@ -1,6 +1,6 @@
 # Covid-19 Cases India Tracker
 
-This application gives nationwide and state-wise Covid-19 cases numbers. This application returns Number of Active cases, deaths, confirmed cases and cured patients using voice commands. The data is extracted from the web using the BeautifulSoup library. 
+This application gives nationwide and state-wise Covid-19 cases numbers. This application returns Number of Active cases, deaths, confirmed cases and cured patients using voice commands. The data is scraped from the web using BeautifulSoup.
 
 ## Example Commands
 1. Nationwide data commands: 'Get the total number of confirmed cases nationwide' , 'Get the number of deaths nationwide', 'Get the number of active cases nationwide', 'Get the number of patients discharged nationwide'
