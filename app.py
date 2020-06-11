@@ -32,7 +32,10 @@ class covid_cases_data:
         elif type_ == 'cured':
             return int(self.country_data[1].strong.text)
         elif type_== 'total_confirmed':
-            return int(self.state_data[38][5].text)
+            sum_=0
+            for state in self.state_data[1:36]:
+                sum_+=int(state[5].text)
+            return sum_
 
 
     def update_data(self):
