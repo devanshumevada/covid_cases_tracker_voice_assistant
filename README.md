@@ -10,3 +10,5 @@ This application gives nationwide and state-wise Covid-19 cases numbers. This ap
 'state' keyword is necessary for state-specific commands as this application uses regular expressions to identify the type and the nature of the voice command.
 
 Special thanks to the Youtuber Tech With Tim for the project idea.
+
+This application does not work currently as the source website from which the data was being fetched recently had a structure change. I'll fix this application as soon as I get time. 
