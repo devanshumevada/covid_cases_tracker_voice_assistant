@@ -156,7 +156,7 @@ def main():
                         print('State specific command detected')
                         answer = d.get_statewise_data(pattern['type'],state) 
                         speak_answer(answer)
-                        break
+                        continue
 
         
         
