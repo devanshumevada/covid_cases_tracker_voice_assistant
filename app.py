@@ -141,7 +141,7 @@ def main():
         if 'state' not in text:
             for pattern in nation_patterns:
                 if pattern['pattern'].match(text):
-                    print('National Pattern matched')
+                    print('Nation specific command detected')
                     answer = d.get_national_data(pattern['type'])
                     speak_answer(answer)
                     break
@@ -153,6 +153,7 @@ def main():
             if pattern['pattern'].match(text):
                 for state in states:
                     if state in text:
+                        print('State specific command detected')
                         answer = d.get_statewise_data(pattern['type'],state) 
                         speak_answer(answer)
                         break
