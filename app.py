@@ -6,56 +6,48 @@ import re
 
 class covid_cases_data:
     def __init__(self):
-        self.source_url = 'https://www.mohfw.gov.in'
-        self.response = requests.get(self.source_url)
-        self.soup = BeautifulSoup(self.response.content, 'lxml')
+        self.source_url = 'https://api.covid19india.org/data.json'
+        self.data = requests.get(self.source_url).json()
         self.state_data = self.get_state_data()
         self.country_data = self.get_country_data()
 
     def get_state_data(self):
-        op_rows = []
-        for row in self.soup.find_all('tr'):
-            current_row = []
-            for col in row.find_all('td'):
-                current_row.append(col)
-            op_rows.append(current_row)
-        return op_rows
+        return self.data['statewise'][1::]
 
     def get_country_data(self):
-        return self.soup.find('div', class_='site-stats-count').find_all('li')
+        return self.data['statewise'][0]
 
     def get_national_data(self,type_):
         if type_ == 'deaths':
-            return int(self.country_data[2].strong.text)
+            return int(self.country_data['deaths'])
         elif type_ == 'active_cases':
-            return int(self.country_data[0].strong.text)
+            return int(self.country_data['active'])
         elif type_ == 'cured':
-            return int(self.country_data[1].strong.text)
+            return int(self.country_data['recovered'])
         elif type_== 'total_confirmed':
-            return int(self.country_data[0].strong.text)+int(self.country_data[1].strong.text)+int(self.country_data[2].strong.text)+int(self.country_data[3].strong.text)
+            return int(self.country_data['confirmed'])
             
 
 
     def update_data(self):
-        self.response = requests.get(self.source_url)
-        self.soup = BeautifulSoup(self.response.content, 'lxml')
+        self.data = requests.get(self.source_url).json()
         self.state_data = self.get_state_data()
         self.country_data = self.get_country_data()
 
     def get_statewise_data(self, type_, required_state):
         current_state = None
-        for state in self.state_data[1:36]:
-            if state[1].text.lower() == required_state:
+        for state in self.state_data:
+            if state['state'].lower() == required_state:
                 current_state = state
         
         if type_=='active_cases':
-            return int(current_state[2].text)
+            return int(current_state['active'])
         elif type_=='cured':
-            return int(current_state[3].text)
+            return int(current_state['recovered'])
         elif type_=='deaths':
-            return int(current_state[4].text)
+            return int(current_state['deaths'])
         elif type_=='total_confirmed':
-            return int(current_state[5].text)
+            return int(current_state['confirmed'])
             
 def speak(text):
     engine = pyttsx3.init()
@@ -66,6 +58,7 @@ def speech_to_text():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         audio = r.listen(source)
+        #Using text = '' here because using text=None would be problematic as this function returns text.lower()
         text = ''
         try:
             text = r.recognize_google(audio)
